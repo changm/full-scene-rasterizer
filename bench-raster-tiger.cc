@@ -1,4 +1,4 @@
-#include "bird.h"
+#include "tiger.h"
 #ifdef EMSCRIPTEN
 #define EMCC
 #endif
@@ -59,28 +59,28 @@ void drawFrame(int angle)
 		p.r = rast;
 #endif
 		Matrix m;
-		m.x0 = -25;
-		m.y0 = -30;
+		//m.x0 = -25;
+		//m.y0 = -30;
 		//Matrix rot(2*3.14159*45/360.);
-		Matrix rot(2*3.141459*20*angle/360.);
-		m.Mul(rot);
-		Matrix trans;
-		trans.x0 = 25;
-		trans.y0 = 30;
-		m.Mul(trans);
-		m.x0 += 500;
-		m.y0 += 500;
+		//Matrix rot(2*3.141459*20*angle/360.);
+		//m.Mul(rot);
+		//Matrix trans;
+		//trans.x0 = 25;
+		//trans.y0 = 30;
+		//m.Mul(trans);
+		//m.x0 += 500;
+		//m.y0 += 500;
 		bool ltr = true;
 		//printf("%f %f %f %f %f %f\n", m.xx, m.xy, m.yx, m.yy, m.y0, m.x0);
 		//printf("%f %f %f %f %f %f\n", rot.xx, rot.xy, rot.yx, rot.yy, rot.y0, rot.x0);
 		float scale = 1;
-		m.y0 -= 400;
-		for (int col = 0; col < 10; col++) {
-			if (ltr)
-				m.x0 += -300;
-			else
-				m.x0 += 800;
-			for (int row = 0; row < 12; row++) {
+		//m.y0 -= 400;
+		//for (int col = 0; col < 10; col++) {
+			//if (ltr)
+			//	m.x0 += -300;
+			//else
+			//	m.x0 += 800;
+			//for (int row = 0; row < 12; row++) {
 				int i=0;
 				double *d = data;
 		int k = 0;
@@ -105,7 +105,7 @@ void drawFrame(int angle)
 								//printf("'m',");
 								float x = *d++; float y = *d++;
 								//printf("m %f %f\n", x, y);
-								Point end = {x, y};
+								Point end = {x/20, y/20};
 								//cairo_move_to(cr, x, y);
 								end = m.Mul(end);
 #ifdef CANVAS
@@ -119,7 +119,7 @@ void drawFrame(int angle)
 								float x = *d++; float y = *d++;
 								//printf("'l',");
 								//	printf("l %f, %f,\n", x, y);
-								Point end = {x, y};
+								Point end = {x/20, y/20};
 								end = m.Mul(end);
 #ifdef CANVAS
 								canvas_line_to(end.x, end.y);
@@ -135,9 +135,9 @@ void drawFrame(int angle)
 								float dy = *d++;
 								//	printf("c %f %f %f %f\n", cx, cy, dx, dy);
 								Point control;
-								Point end = {dx, dy};
-								control.x = (cx);
-								control.y = (cy);
+								Point end = {dx/20, dy/20};
+								control.x = (cx/20);
+								control.y = (cy/20);
 								k++;
 								control = m.Mul(control);
 								end = m.Mul(end);
@@ -158,18 +158,18 @@ void drawFrame(int angle)
 #endif
 						//cairo_fill(cr);
 					}
-				}
-				if (ltr)
-					m.x0 += 100;
-				else
-					m.x0 -= 100;
+				//}
+				//if (ltr)
+				//	m.x0 += 100;
+				//else
+				//	m.x0 -= 100;
 				//translate_y = 0;
-			}
-			if (ltr)
-				m.x0 -= 900;
-			else
-				m.x0 += 400;
-			m.y0 += 100;
+			//}
+			//if (ltr)
+			//	m.x0 -= 900;
+			//else
+			//	m.x0 += 400;
+			//m.y0 += 100;
 		}
 		//start = mach_absolute_time();
 		rast->rasterize();
@@ -201,8 +201,8 @@ void drawFrame(int angle)
 }
 
 void init() {
-	width = 1520;
-	 height = 1080;
+	width = 720;
+	 height = 510;
 
 #ifdef EMCC
         emscripten_set_canvas_size(width, height);
